@@ -1,12 +1,13 @@
-// Copyright 2023 Danny Nguyen (@nooges)
-// SPDX-License-Identifier: GPL-2.0-or-later
-
 #include QMK_KEYBOARD_H
+
+#if defined(RGBLIGHT_ENABLE) && !defined(RGBLIGHT_H)
+#    include "rgblight.h"
+#endif
 
 #define _QWERTY 0
 #define _LOWER 1
 #define _RAISE 2
-#define _ADJUST 3
+#define _ADJUST 8
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
@@ -14,6 +15,36 @@ enum custom_keycodes {
   RAISE,
   ADJUST,
 };
+
+#define KC_ KC_TRNS
+#define _______ KC_TRNS
+
+#define KC_LOWR LOWER
+#define KC_RASE RAISE
+#define KC_RST QK_BOOT
+#define KC_BL_S BL_STEP
+#define KC_BL_B BL_BRTG
+#define KC_DBUG DEBUG
+#define KC_RTOG RGB_TOG
+#define KC_RMOD UG_NEXT
+#define KC_RHUI UG_HUEU
+#define KC_RHUD UG_HUED
+#define KC_RSAI UG_SATU
+#define KC_RSAD UG_SATD
+#define KC_RVAI UG_VALU
+#define KC_RVAD UG_VALD
+
+#define KC_M_P UG_NEXTE_PLAIN
+#define KC_M_B UG_NEXTE_BREATHE
+#define KC_M_R UG_NEXTE_RAINBOW
+#define KC_M_SW UG_NEXTE_SWIRL
+#define KC_M_SN UG_NEXTE_SNAKE
+#define KC_M_K UG_NEXTE_KNIGHT
+#define KC_M_X UG_NEXTE_XMAS
+#define KC_M_G UG_NEXTE_GRADIENT
+#define KC_M_T UG_NEXTE_RGBTEST
+
+#define KC_SHCA MT(MOD_LSFT, KC_CAPS)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -23,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+     KC_SHCA, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_HOME,          KC_END,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
@@ -63,9 +94,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      RGB_M_P ,RGB_M_B ,RGB_M_R ,RGB_M_SW,RGB_M_SN,RGB_M_K ,                           RGB_M_X ,RGB_M_G ,RGB_M_T , _______, _______,QK_BOOT ,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     RGB_TOG ,RGB_MOD ,RGB_HUI ,RGB_SAI ,RGB_VAI , _______,                            _______, _______, _______, _______, _______,DB_TOGG ,
+     UG_TOGG,UG_NEXT ,UG_HUEU ,UG_SATU ,UG_VALU , _______,                            _______, _______, _______, _______, _______,DB_TOGG ,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-      _______, _______,RGB_HUD ,RGB_SAD ,RGB_VAD , _______,                            _______, _______, _______, _______, _______, _______,
+      _______, _______,UG_HUED ,UG_SATD ,UG_VALD , _______,                            _______, _______, _______, _______, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      BL_STEP , _______, _______, _______, _______, _______, _______,          _______, _______,KC_MYCM , _______,KC_CALC , _______, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘

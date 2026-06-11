@@ -1,0 +1,7 @@
+{
+    "features": {
+        "rgblight": true,
+        "backlight": true,
+        "lto": true
+    }
+}
